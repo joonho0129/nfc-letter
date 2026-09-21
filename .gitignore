@@ -26,3 +26,6 @@ dist-ssr
 
 # platform-specific compiled binary from impeccable skill install
 .claude/skills/impeccable/scripts/bin/
+
+# personal photos — keep out of a public GitHub repo (portfolio use)
+src/assets/timeline/*.jpg
