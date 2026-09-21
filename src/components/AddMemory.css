@@ -32,6 +32,29 @@
   object-fit: cover;
 }
 
+.add-memory-added {
+  margin: 0;
+  width: 100%;
+  max-width: 280px;
+  text-align: center;
+}
+
+.add-memory-added img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px -16px rgba(42, 32, 36, 0.35);
+  display: block;
+}
+
+.add-memory-added figcaption {
+  margin-top: 1rem;
+  color: var(--text-soft);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
 .add-memory-caption {
   width: min(280px, 80vw);
   padding: 0.75rem 1rem;

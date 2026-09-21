@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './AddMemory.css'
 
 const MAX_WIDTH = 1400
@@ -30,10 +30,18 @@ function resizeDataUrl(dataUrl) {
 }
 
 export default function AddMemory() {
+  const [extraPhotos, setExtraPhotos] = useState(null) // null = 로딩 중
   const [preview, setPreview] = useState(null)
   const [caption, setCaption] = useState('')
   const [confirming, setConfirming] = useState(false)
   const [status, setStatus] = useState(null)
+
+  useEffect(() => {
+    fetch('/api/extra-photos')
+      .then((res) => res.json())
+      .then((photos) => setExtraPhotos(Array.isArray(photos) ? photos : []))
+      .catch(() => setExtraPhotos([]))
+  }, [])
 
   async function handleFile(e) {
     const file = e.target.files?.[0]
@@ -53,12 +61,28 @@ export default function AddMemory() {
       })
       const data = await res.json()
       if (!data.ok) throw new Error(data.error)
-      setStatus('done')
+      setExtraPhotos((prev) => [...(prev ?? []), { url: preview, caption }])
     } catch (err) {
       setStatus('error')
       console.error(err)
     }
     setConfirming(false)
+  }
+
+  if (extraPhotos === null) return null
+
+  if (extraPhotos.length > 0) {
+    return (
+      <div className="add-memory">
+        <p className="add-memory-title">오늘</p>
+        {extraPhotos.map((p, i) => (
+          <figure className="add-memory-added" key={i}>
+            <img src={p.url} alt={p.caption} />
+            <figcaption>{p.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    )
   }
 
   return (
@@ -91,7 +115,6 @@ export default function AddMemory() {
         저장하기
       </button>
 
-      {status === 'done' && <p className="add-memory-status">추가됐어요. 페이지 새로고침하면 보여요.</p>}
       {status === 'error' && <p className="add-memory-status">저장 실패 — 다시 시도해줘.</p>}
 
       {confirming && (
