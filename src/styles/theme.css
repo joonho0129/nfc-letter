@@ -14,10 +14,10 @@
 }
 
 :root {
-  /* 단일 팔레트: 블러시 화이트 + 베리 accent (진부한 크림/브라스 톤 회피) */
-  --bg: #fbf7f6;
-  --text: #2a2024;
-  --text-soft: #7a6a6e;
+  /* 단일 팔레트: 아이보리 종이 + 베리 accent */
+  --bg: #f5efe0;
+  --text: #2a2420;
+  --text-soft: #7d7263;
   --accent: #b5495b;
   --accent-soft: rgba(181, 73, 91, 0.1);
   --radius: 16px;
@@ -30,6 +30,18 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-display);
+}
+
+/* 종이 질감: SVG 노이즈를 옅게 깔아서 평면 색상 대신 은은한 그레인 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @keyframes fade-up {
