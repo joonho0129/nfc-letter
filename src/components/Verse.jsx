@@ -5,8 +5,7 @@ import './Verse.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ponytail: 시 구절은 초안 — 실제 문구로 교체 필요
-const LINES = ['그 날의 우리를', '다시 걸어본다', '웃음도, 서툶도', '전부 사랑이었다']
+const LINES = ['내가 좋은 사람이 되어', '너에게 가겠다', '너는 그냥', '그 자리에 있어주면 된다']
 
 export default function Verse() {
   const ref = useRef(null)
@@ -40,6 +39,7 @@ export default function Verse() {
           {line}
         </p>
       ))}
+      <p className="verse-credit">— 너에게, 서혜진</p>
     </section>
   )
 }

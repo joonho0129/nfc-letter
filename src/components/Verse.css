@@ -13,3 +13,9 @@
   font-size: 1.6rem;
   color: var(--text);
 }
+
+.verse-credit {
+  margin: 1rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
