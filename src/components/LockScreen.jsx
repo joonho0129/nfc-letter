@@ -7,13 +7,25 @@ function pad(n) {
 
 export default function LockScreen() {
   const { days, hours, minutes, seconds } = useCountdown()
+  const dDay = hours || minutes || seconds ? days + 1 : days
 
   return (
     <div className="lock-screen">
-      <p className="lock-message">조금만 기다려줘 💌</p>
-      <div className="lock-countdown">
-        <span>{days}일</span>
-        <span>{pad(hours)}:{pad(minutes)}:{pad(seconds)}</span>
+      <div className="lock-card">
+        <svg
+          className="lock-envelope"
+          viewBox="0 0 120 80"
+          fill="none"
+          aria-hidden="true"
+        >
+          <rect x="4" y="4" width="112" height="72" rx="6" pathLength="1" />
+          <path d="M4 10 L60 52 L116 10" pathLength="1" />
+        </svg>
+        <p className="lock-message">조금만 기다려줘</p>
+        <p className="lock-dday">D-{dDay}</p>
+        <p className="lock-time">
+          {pad(hours)}:{pad(minutes)}:{pad(seconds)}
+        </p>
       </div>
     </div>
   )

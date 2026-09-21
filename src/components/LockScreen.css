@@ -1,26 +1,93 @@
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .lock-screen {
   min-height: 100dvh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.lock-card {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 2rem;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 48px -24px rgba(42, 32, 36, 0.3);
   text-align: center;
-  padding: 1rem;
+}
+
+.lock-envelope {
+  width: 64px;
+  height: 44px;
+  margin-bottom: 0.5rem;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-line 1.4s ease-out 0.2s forwards;
 }
 
 .lock-message {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 600;
+  margin: 0;
+  opacity: 0;
+  animation: fade-up 0.6s ease-out 1.1s forwards;
 }
 
-.lock-countdown {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  font-variant-numeric: tabular-nums;
+.lock-dday {
+  font-size: 2.75rem;
+  font-weight: 800;
   color: var(--accent);
+  margin: 0;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: fade-up 0.6s ease-out 1.3s forwards;
+}
+
+.lock-time {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  opacity: 0;
+  animation: fade-up 0.6s ease-out 1.5s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lock-envelope,
+  .lock-message,
+  .lock-dday,
+  .lock-time {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
 }
