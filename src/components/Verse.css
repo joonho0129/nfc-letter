@@ -1,10 +1,44 @@
+@keyframes draw-flourish {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.verse-wrap {
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
 .verse {
+  width: min(360px, 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  padding: 3rem 1.5rem;
+  padding: 3rem 1.5rem 2.25rem;
   text-align: center;
+  background: #fff;
+  border-radius: 80px 80px 24px 24px;
+  box-shadow: 0 20px 48px -28px rgba(42, 32, 36, 0.3);
+}
+
+.verse-flourish {
+  width: 96px;
+  height: 12px;
+  margin-bottom: 0.5rem;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.verse-flourish.in-view {
+  animation: draw-flourish 1s ease-out forwards;
 }
 
 .verse-line {
@@ -18,4 +52,10 @@
   margin: 1rem 0 0;
   font-size: 0.85rem;
   color: var(--text-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verse-flourish {
+    stroke-dashoffset: 0;
+  }
 }

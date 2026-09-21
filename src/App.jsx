@@ -5,7 +5,6 @@ import Timeline from './components/Timeline'
 import Milestone from './components/Milestone'
 import Closing from './components/Closing'
 import AddMemory from './components/AddMemory'
-import ArchDivider from './components/ArchDivider'
 import Verse from './components/Verse'
 import BgmToggle from './components/BgmToggle'
 
@@ -24,9 +23,7 @@ function App() {
       <BgmToggle />
       <Intro />
       <Timeline />
-      <ArchDivider />
       <Verse />
-      <ArchDivider />
       <Milestone />
       <Closing />
     </>
