@@ -11,7 +11,10 @@ import BgmToggle from './components/BgmToggle'
 function App() {
   const { isLocked } = useCountdown()
 
-  if (isLocked) return <LockScreen />
+  // ponytail: 배포된 사이트에서 본인만 확인용 — ?preview로 잠금 무시
+  const forcedOpen = new URLSearchParams(window.location.search).has('preview')
+
+  if (isLocked && !forcedOpen) return <LockScreen />
 
   return (
     <>
