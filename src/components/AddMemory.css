@@ -1,11 +1,9 @@
 .add-memory {
-  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 1.25rem;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1.5rem 3rem;
   text-align: center;
 }
 

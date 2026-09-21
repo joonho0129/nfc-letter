@@ -1,11 +1,9 @@
 .milestone {
-  min-height: 60dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem 1.5rem 3rem;
   text-align: center;
 }
 
