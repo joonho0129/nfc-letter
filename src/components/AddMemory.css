@@ -1,0 +1,114 @@
+.add-memory {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.add-memory-title {
+  font-family: var(--font-script);
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.add-memory-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(280px, 80vw);
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  border: 2px dashed var(--accent);
+  color: var(--text-soft);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.add-memory-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.add-memory-caption {
+  width: min(280px, 80vw);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.add-memory-submit {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-memory-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.add-memory-status {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.add-memory-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 32, 36, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.add-memory-confirm {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-script);
+  font-size: 1.5rem;
+  box-shadow: 0 20px 48px -24px rgba(42, 32, 36, 0.4);
+}
+
+.add-memory-confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.add-memory-confirm-actions button {
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-memory-confirm-actions button:first-child {
+  background: var(--accent);
+  color: #fff;
+}
+
+.add-memory-confirm-actions button:last-child {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
