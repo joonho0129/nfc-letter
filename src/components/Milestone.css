@@ -11,9 +11,10 @@
 
 .milestone-label {
   margin: 0;
+  font-family: var(--font-script);
   color: var(--text-soft);
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 400;
 }
 
 .milestone-number {

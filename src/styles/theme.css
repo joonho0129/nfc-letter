@@ -5,6 +5,14 @@
   font-display: swap;
 }
 
+/* ponytail: 감성 포인트 문구 전용 — 글리프가 실제 사용 문구로 서브셋되어 있음, 새 문구 추가 시 재추출 필요 */
+@font-face {
+  font-family: 'Nanum Pen Script';
+  font-weight: 400;
+  src: url('/fonts/NanumPenScript.woff2') format('woff2');
+  font-display: swap;
+}
+
 :root {
   /* 단일 팔레트: 블러시 화이트 + 베리 accent (진부한 크림/브라스 톤 회피) */
   --bg: #fbf7f6;
@@ -15,6 +23,7 @@
   --radius: 16px;
 
   --font-display: 'SUIT Variable', system-ui, sans-serif;
+  --font-script: 'Nanum Pen Script', var(--font-display);
 }
 
 body {
