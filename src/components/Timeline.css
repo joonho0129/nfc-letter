@@ -2,9 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
-  padding: 3rem 1rem;
-  background: #faf6f0;
+  gap: 4rem;
+  padding: 4rem 1.5rem;
 }
 
 .timeline-item {
@@ -17,7 +16,8 @@
 .timeline-photo {
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px -16px rgba(42, 32, 36, 0.35);
 }
 
 .timeline-photo img {
@@ -28,7 +28,8 @@
 }
 
 .timeline-item figcaption {
-  margin-top: 0.75rem;
-  color: #5c4b3a;
+  margin-top: 1rem;
+  color: var(--text-soft);
   font-size: 1rem;
+  font-weight: 500;
 }

@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'SUIT Variable';
+  font-weight: 100 900;
+  src: url('/fonts/SUIT-Variable.woff2') format('woff2-variations');
+  font-display: swap;
+}
+
+:root {
+  /* 단일 팔레트: 블러시 화이트 + 베리 accent (진부한 크림/브라스 톤 회피) */
+  --bg: #fbf7f6;
+  --text: #2a2024;
+  --text-soft: #7a6a6e;
+  --accent: #b5495b;
+  --accent-soft: rgba(181, 73, 91, 0.1);
+  --radius: 16px;
+
+  --font-display: 'SUIT Variable', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-display);
+}

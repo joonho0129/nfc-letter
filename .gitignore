@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# platform-specific compiled binary from impeccable skill install
+.claude/skills/impeccable/scripts/bin/

@@ -1,18 +1,17 @@
 .lock-screen {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  background: #faf6f0;
-  color: #5c4b3a;
   text-align: center;
   padding: 1rem;
 }
 
 .lock-message {
   font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .lock-countdown {
@@ -20,6 +19,8 @@
   flex-direction: column;
   gap: 0.5rem;
   font-size: 1.8rem;
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
+  color: var(--accent);
 }
