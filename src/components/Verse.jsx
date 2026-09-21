@@ -5,7 +5,7 @@ import './Verse.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const LINES = ['내가 좋은 사람이 되어', '너에게 가겠다', '너는 그냥', '그 자리에 있어주면 된다']
+const LINES = ['평범한 하루들이', '쌓이고 쌓여서', '어느새 우리가 됐다', '오늘도, 그 하루를']
 
 export default function Verse() {
   const ref = useRef(null)
@@ -52,7 +52,6 @@ export default function Verse() {
             {line}
           </p>
         ))}
-        <p className="verse-credit">— 너에게, 서혜진</p>
       </section>
     </div>
   )
