@@ -23,7 +23,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 3rem 2rem;
-  background: #fff;
+  background: var(--bg-panel);
   border-radius: var(--radius);
   box-shadow: 0 20px 48px -24px rgba(42, 32, 36, 0.3);
   text-align: center;

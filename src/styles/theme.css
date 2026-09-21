@@ -16,6 +16,7 @@
 :root {
   /* 단일 팔레트: 아이보리 종이 + 베리 accent */
   --bg: #f5efe0;
+  --bg-panel: #faf6ea;
   --text: #2a2420;
   --text-soft: #7d7263;
   --accent: #b5495b;

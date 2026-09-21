@@ -98,7 +98,7 @@
   position: relative;
   margin: -56px auto 0;
   width: 92%;
-  background: var(--bg);
+  background: var(--bg-panel);
   border-radius: 80px 80px 0 0;
   padding: 2.25rem 1.25rem 1.5rem;
   box-shadow: 0 -12px 32px -20px rgba(42, 32, 36, 0.3);
