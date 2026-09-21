@@ -40,7 +40,6 @@ export default function Intro() {
       </div>
 
       <p className="intro-date">2026. 10. 10.</p>
-      <div className="intro-scroll-cue" aria-hidden="true" />
     </section>
   )
 }
