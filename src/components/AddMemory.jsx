@@ -1,12 +1,31 @@
 import { useState } from 'react'
 import './AddMemory.css'
 
+const MAX_WIDTH = 1400
+
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => resolve(reader.result)
     reader.onerror = reject
     reader.readAsDataURL(file)
+  })
+}
+
+// 원본 카메라 사진은 여러 MB라 서버리스 함수 payload 한도를 넘을 수 있어 업로드 전에 축소
+function resizeDataUrl(dataUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => {
+      const scale = Math.min(1, MAX_WIDTH / img.width)
+      const canvas = document.createElement('canvas')
+      canvas.width = img.width * scale
+      canvas.height = img.height * scale
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height)
+      resolve(canvas.toDataURL('image/jpeg', 0.85))
+    }
+    img.onerror = reject
+    img.src = dataUrl
   })
 }
 
@@ -19,7 +38,8 @@ export default function AddMemory() {
   async function handleFile(e) {
     const file = e.target.files?.[0]
     if (!file) return
-    setPreview(await fileToDataUrl(file))
+    const raw = await fileToDataUrl(file)
+    setPreview(await resizeDataUrl(raw))
     setStatus(null)
   }
 
@@ -72,7 +92,7 @@ export default function AddMemory() {
       </button>
 
       {status === 'done' && <p className="add-memory-status">추가됐어요. 페이지 새로고침하면 보여요.</p>}
-      {status === 'error' && <p className="add-memory-status">저장 실패 — dev 서버 켜져 있는지 확인해줘.</p>}
+      {status === 'error' && <p className="add-memory-status">저장 실패 — 다시 시도해줘.</p>}
 
       {confirming && (
         <div className="add-memory-confirm-backdrop">
