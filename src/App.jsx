@@ -11,11 +11,6 @@ import BgmToggle from './components/BgmToggle'
 function App() {
   const { isLocked } = useCountdown()
 
-  // ponytail: 배포 전 마지막 사진 추가용 숨김 페이지, 링크로 노출 안 함
-  if (new URLSearchParams(window.location.search).has('add-memory')) {
-    return <AddMemory />
-  }
-
   if (isLocked) return <LockScreen />
 
   return (
@@ -25,6 +20,7 @@ function App() {
       <Timeline />
       <Verse />
       <Milestone />
+      <AddMemory />
       <Closing />
     </>
   )
