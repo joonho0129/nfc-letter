@@ -10,7 +10,7 @@ export default function Intro() {
       <p className="intro-eyebrow">1st Anniversary</p>
 
       <div className="intro-hero">
-        <img className="intro-photo" src={ringPhoto} alt="" />
+        <img className="intro-photo" src={ringPhoto} alt="" fetchPriority="high" decoding="async" />
         <p className="intro-caption">우리, 1주년</p>
 
         <div className="intro-petals" aria-hidden="true">

@@ -37,7 +37,7 @@ export default function Timeline() {
       {timeline.map(({ id, src, comment }) => (
         <figure className="timeline-item" key={id}>
           <div className="timeline-photo">
-            <img src={src} alt={comment} loading="lazy" />
+            <img src={src} alt={comment} loading="lazy" decoding="async" />
           </div>
           <figcaption>{comment}</figcaption>
         </figure>
