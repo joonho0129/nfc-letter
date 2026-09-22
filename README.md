@@ -1,16 +1,47 @@
-# React + Vite
+# nfc-letter
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+1주년 기념일에 맞춰 잠금 해제되는 NFC 인터랙티브 편지 웹페이지. 손편지에 NFC 스티커를 붙여 전달하고, 특정 날짜(자정) 이후에만 콘텐츠가 열리는 개인 프로젝트. Claude Code로 처음부터 끝까지 구현.
 
-Currently, two official plugins are available:
+> 실제 배포 URL은 여자친구 한 명만 봐야 하는 페이지라 이 README에는 올리지 않았습니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 기술 스택
 
-## React Compiler
+- React + Vite
+- GSAP (ScrollTrigger 기반 스크롤 애니메이션)
+- Vercel (배포 + Serverless Functions + Blob Storage)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 페이지 구조
 
-## Expanding the Oxlint configuration
+잠금 화면 → 인트로(히어로 사진 + 아치형 패널) → 타임라인(사진 갤러리) → 시 구절(스크롤 리빌) → 마일스톤 카운트업 → (선택) 당일 사진 추가 → 클로징
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 만들면서 겪은 문제 / 알아낸 점
+
+### 자체 호스팅 웹폰트 서브셋 실수를 세 번 반복함
+손글씨 폰트(Nanum Pen Script)를 용량 절감을 위해 실제 쓰는 문구만 골라 서브셋 추출해서 셀프 호스팅했는데, 이후 문구를 수정할 때마다 새 글자를 서브셋에 추가하는 걸 깜빡했다. 결과: 폰트에 없는 글자만 조용히 시스템 폰트로 대체되면서, 한 줄 안에서 글씨체가 섞여 보이는 버그가 세 번이나 반복됨. `document.fonts.check()`로 확인해봐도 폰트 스택 전체(대체 폰트 포함) 기준으로 체크하기 때문에 이 버그를 못 잡아낸다는 것도 삽질하며 알게 됨. 결국 코드 전체를 grep해서 스크립트 폰트가 쓰이는 모든 문자열을 한 번에 모아 재추출하는 걸로 해결. 웹폰트 서브셋팅은 "지금 쓰는 텍스트"가 아니라 "앞으로 쓸 수 있는 모든 텍스트"를 기준으로 하거나, 아예 풀 글리프셋을 쓰는 게 나을 수도 있겠다는 교훈.
+
+### 미리보기 도구의 스크린샷 렌더링 버그
+전체 화면을 채우는 `background-image`를 쓴 컴포넌트(락스크린 배경 사진)를 스크린샷으로 확인했는데, 화면 절반만 그려지는 현상이 반복적으로 나타남. `getBoundingClientRect()`, `devicePixelRatio`, `visualViewport` 등 DOM 레벨에서는 전부 정상 수치였고, `position: fixed`와 `position: relative` 양쪽 다 재현됐다. 실제 CSS/레이아웃 버그가 아니라 개발 중 쓰던 브라우저 미리보기 도구 자체의 캡처 파이프라인 이슈로 결론 내림 — 즉, 도구로 확인한 시각적 결과와 실제 코드의 정합성을 분리해서 판단해야 했던 케이스.
+
+### "당일 즉흥 사진 추가" 기능을 두 번 다시 만듦
+처음엔 배포 직전 로컬에서만 쓰는 편의 기능으로, Vite dev 서버에 커스텀 미들웨어를 붙여 로컬 파일을 직접 수정하는 방식으로 구현했다. 그런데 실제 요구사항은 "그날 현장에서 폰으로 바로 추가하고 싶다"는 것이었어서, 로컬 전용 구조로는 애초에 목적에 안 맞았다. 결국 Vercel Blob Storage + Serverless Functions로 다시 짜서, 배포된 사이트에서 이미지 업로드 → 클라우드 저장 → 페이지가 런타임에 목록을 fetch해서 렌더링하는 구조로 교체. 처음부터 "이 기능을 실제로 누가, 어디서 쓸 것인가"를 더 명확히 물었으면 한 번에 끝났을 삽질.
+
+### 서버리스 payload 제한 때문에 클라이언트 리사이즈 추가
+휴대폰 원본 사진을 그대로 base64로 업로드하면 서버리스 함수 payload 제한을 넘을 수 있어서, 업로드 전에 canvas로 최대 1400px / JPEG 85%로 축소하는 로직을 클라이언트에 추가.
+
+### JSON 매니페스트 read-modify-write 레이스 컨디션
+추가 사진 목록을 별도 DB 없이 Blob에 JSON 파일 하나로 관리했는데, 저장 버튼을 연타하면 여러 요청이 동시에 같은 파일을 읽고-수정하고-쓰면서 일부 항목이 유실되는 걸 확인함(테스트 중 실제로 재현). 한 사람이 한 번 쓰는 용도라 심각한 문제는 아니라 판단해 그대로 두었지만, 동시 쓰기가 많아지는 상황이었다면 KV 같은 원자적 쓰기가 되는 저장소로 바꿨어야 했을 것.
+
+### 저작권 고려 — 포트폴리오 겸용이라는 이중 목적 때문에 바뀐 판단
+페이지 한 섹션에 실제 출판된 시를 출처 표기하고 넣었는데, "개인 선물"로만 끝나는 게 아니라 "포트폴리오로 공개"라는 목적이 있다는 걸 다시 짚어보니 판단이 달라졌다. 사적 이용을 위한 복제(저작권법 제30조)는 비공개 개인 사용에 한정되는데, 공개 GitHub 저장소에 시 전문이 박혀 있는 건 그 경계를 벗어난다. 결국 창작 문구로 교체함. 같은 이유로 실제 사진들과 연애 관련 세부사항이 담긴 기획 문서(`spec.md`)도 git 히스토리 전체에서 `git filter-repo`로 제거하고 로컬에만 남김 — 처음엔 사진만 신경 썼다가 나중에 기획 문서에도 개인정보가 있다는 걸 다시 지적받고 알아차림.
+
+### 클라이언트 사이드 날짜 잠금의 한계
+잠금 로직은 순수 클라이언트(JS) 비교라, 빌드된 번들을 열어보면 이론적으로 우회 가능하다. 다만 이 프로젝트는 URL을 아는 사람이 NFC 태그를 통해서만 접근하고, 그 태그 자체가 실물 편지와 함께 특정 날짜에 전달되는 구조라 실질적인 위협 모델이 성립하지 않는다고 판단해 서버 사이드 검증은 의도적으로 생략함. "기술적으로 완벽한 방어"와 "실제 필요한 만큼의 방어"를 구분해야 했던 케이스.
+
+## 로컬 실행
+
+```bash
+npm install
+npm run dev
+```
+
+`src/assets/timeline/*.jpg`와 `spec.md`는 개인정보라 이 저장소에서 제외되어 있어, 클론 직후에는 타임라인 이미지 import가 깨진다. 직접 사진을 채워 넣어야 빌드가 정상 동작한다.
