@@ -1,12 +1,15 @@
+import { lazy, Suspense } from 'react'
 import { useCountdown } from './lib/useCountdown'
 import LockScreen from './components/LockScreen'
-import Intro from './components/Intro'
-import Timeline from './components/Timeline'
-import Milestone from './components/Milestone'
-import Closing from './components/Closing'
-import AddMemory from './components/AddMemory'
-import Verse from './components/Verse'
-import BgmToggle from './components/BgmToggle'
+
+// 잠금 상태에서는 이 청크(사진/코멘트/시 구절 등 실제 콘텐츠)가 아예 요청되지 않도록 지연 로드
+const Intro = lazy(() => import('./components/Intro'))
+const Timeline = lazy(() => import('./components/Timeline'))
+const Milestone = lazy(() => import('./components/Milestone'))
+const Closing = lazy(() => import('./components/Closing'))
+const AddMemory = lazy(() => import('./components/AddMemory'))
+const Verse = lazy(() => import('./components/Verse'))
+const BgmToggle = lazy(() => import('./components/BgmToggle'))
 
 function App() {
   const { isLocked } = useCountdown()
@@ -17,7 +20,7 @@ function App() {
   if (isLocked && !forcedOpen) return <LockScreen />
 
   return (
-    <>
+    <Suspense fallback={null}>
       <BgmToggle />
       <Intro />
       <Timeline />
@@ -25,7 +28,7 @@ function App() {
       <Milestone />
       <AddMemory />
       <Closing />
-    </>
+    </Suspense>
   )
 }
 
