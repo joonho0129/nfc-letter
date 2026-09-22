@@ -1,7 +1,32 @@
+import { useEffect, useState } from 'react'
 import ringPhoto from '../assets/timeline/05-ring-closeup.jpg'
 import './Intro.css'
 
 const PETAL_COUNT = 10
+
+function ScrollHint() {
+  const [hidden, setHidden] = useState(false)
+
+  useEffect(() => {
+    function onFirstTouch() {
+      setHidden(true)
+      document.removeEventListener('pointerdown', onFirstTouch)
+    }
+    document.addEventListener('pointerdown', onFirstTouch)
+    return () => document.removeEventListener('pointerdown', onFirstTouch)
+  }, [])
+
+  if (hidden) return null
+
+  return (
+    <div className="scroll-hint" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 8 L12 16 L20 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <span>밑으로 스크롤해줘!</span>
+    </div>
+  )
+}
 
 // ponytail: 문구는 초안 — 실제 카피로 교체 필요
 export default function Intro() {
@@ -40,6 +65,7 @@ export default function Intro() {
       </div>
 
       <p className="intro-date">2026. 10. 10.</p>
+      <ScrollHint />
     </section>
   )
 }
