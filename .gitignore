@@ -30,3 +30,6 @@ dist-ssr
 # personal photos — keep out of a public GitHub repo (portfolio use)
 src/assets/timeline/*.jpg
 .env*
+
+# personal relationship details — keep out of public GitHub repo
+spec.md
