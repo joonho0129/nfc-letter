@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "scroll-hint-bounce",
+        "createdAt": "2026-09-22T14:53:34.661Z",
+        "reason": "domain-appropriate: standard subtle scroll-down-chevron nudge convention (6px ease-in-out oscillation, not a spring/overshoot bounce), not a decorative bounce effect the rule targets"
+      }
+    ]
+  }
+}
